@@ -7,8 +7,9 @@ import {
   createRoutesFromElements,
   RouterProvider,
 } from "react-router-dom";
+import { CookiesProvider } from "react-cookie";
 
-const router = createBrowserRouter(createRoutesFromElements(<App />));
+const router = createBrowserRouter(createRoutesFromElements(App));
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -16,7 +17,9 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <CookiesProvider>
+      <RouterProvider router={router} />
+    </CookiesProvider>
   </React.StrictMode>
 );
 
