@@ -9,6 +9,8 @@ import {
 } from "react-router-dom";
 import { CookiesProvider } from "react-cookie";
 import GlobalStyle from "./styles/globalstyle";
+import { ThemeProvider } from "styled-components";
+import theme from "./constants/theme";
 
 const router = createBrowserRouter(createRoutesFromElements(App));
 
@@ -19,8 +21,10 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <CookiesProvider>
-      <GlobalStyle />
-      <RouterProvider router={router} />
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        <RouterProvider router={router} />
+      </ThemeProvider>
     </CookiesProvider>
   </React.StrictMode>
 );
