@@ -1,11 +1,11 @@
 import React from "react";
-import { Button, Container, Input } from "../../components/common";
+import { Container } from "../../components/common";
+import { TodoForm } from "../../components/todos";
 
 const CreateTodo = () => {
   return (
     <Container display="flex">
-      <Input type="text" />
-      <Button>등록</Button>
+      <TodoForm />
     </Container>
   );
 };
