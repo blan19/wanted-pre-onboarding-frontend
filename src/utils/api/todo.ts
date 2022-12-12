@@ -1,4 +1,5 @@
 import { API_BASE_URL } from "../../constants/env";
+import { TodoType } from "../../feature/TodoContext";
 import { getErrorMessage } from "../misc";
 import { getToken } from "../token";
 import { FieldsValues } from "./auth";
@@ -39,7 +40,7 @@ const createTodo = async (fieldsValues: FieldsValues) => {
   }
 };
 
-const updateTodo = async (id: number, todo: string) => {
+const updateTodo = async (value: Omit<TodoType, "userId">) => {
   try {
     const response = await fetcher(`${API_BASE_URL}/todos`, {
       method: "PUT",
@@ -47,8 +48,11 @@ const updateTodo = async (id: number, todo: string) => {
         Authorization: header,
         "Content-Type": "application/json",
       },
-      params: id,
-      body: JSON.stringify({ todo }),
+      params: value.id,
+      body: JSON.stringify({
+        todo: value.todo,
+        isCompleted: value.isCompleted,
+      }),
     });
 
     return response;
@@ -59,15 +63,12 @@ const updateTodo = async (id: number, todo: string) => {
 
 const deleteTodo = async (id: number) => {
   try {
-    const response = await fetcher(`${API_BASE_URL}/todos`, {
+    await fetch(`${API_BASE_URL}/todos/${id}`, {
       method: "DELETE",
       headers: {
         Authorization: header,
       },
-      params: id,
     });
-
-    return response;
   } catch (error) {
     throw new Error(getErrorMessage(error));
   }
