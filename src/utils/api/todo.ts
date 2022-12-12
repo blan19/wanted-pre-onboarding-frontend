@@ -9,6 +9,8 @@ const token = getToken();
 const header = `Bearer ${token}`;
 
 const getTodos = async () => {
+  if (!token) return;
+
   try {
     const response = await fetcher(`${API_BASE_URL}/todos`, {
       method: "GET",
@@ -24,6 +26,8 @@ const getTodos = async () => {
 };
 
 const createTodo = async (fieldsValues: FieldsValues) => {
+  if (!token) return;
+
   try {
     const response = await fetcher(`${API_BASE_URL}/todos`, {
       method: "POST",
@@ -41,6 +45,8 @@ const createTodo = async (fieldsValues: FieldsValues) => {
 };
 
 const updateTodo = async (value: Omit<TodoType, "userId">) => {
+  if (!token) return;
+
   try {
     const response = await fetcher(`${API_BASE_URL}/todos`, {
       method: "PUT",
@@ -62,6 +68,8 @@ const updateTodo = async (value: Omit<TodoType, "userId">) => {
 };
 
 const deleteTodo = async (id: number) => {
+  if (!token) return;
+
   try {
     await fetch(`${API_BASE_URL}/todos/${id}`, {
       method: "DELETE",
