@@ -1,33 +1,72 @@
-import { FormEvent, useCallback, useRef, useState } from "react";
+import { FormEvent, useCallback, useMemo, useRef, useState } from "react";
 import fieldValidator from "../utils/validator";
+
+const initialState = {
+  email: false,
+  password: false,
+};
+
+interface UseFormProps {
+  callback?: (fieldValue: {
+    [key: string]: FormDataEntryValue;
+  }) => Promise<any>;
+}
 
 export type Fields = "email" | "password";
 
 export type FieldsValues = [key: Fields, value: string][];
 
-export default function useForm() {
+export default function useForm({ callback }: UseFormProps) {
   const ref = useRef<HTMLFormElement>(null);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
+  const [valid, setValid] = useState(initialState);
   const [wasSubmitted, setWasSubmitted] = useState(false);
-  const [disabled, setDisabled] = useState(false);
 
-  const handleOnInvalid = useCallback(() => {}, []);
+  const abled = useMemo(
+    () => Object.values(valid).every((v) => v === true),
+    [valid]
+  );
 
-  const handleSubmit = useCallback((e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const fieldValues = Object.fromEntries(formData.entries());
-    const fields = Object.entries(fieldValues) as unknown as FieldsValues;
-    const fieldsIsValid = fields.every(
-      ([key, value]) => !fieldValidator[key](value)
-    );
+  const handleOnValid = useCallback(
+    (name: "email" | "password", valid: boolean) => {
+      setValid((prev) => ({ ...prev, [name]: valid }));
+    },
+    []
+  );
 
-    setWasSubmitted(true);
+  const handleSubmit = useCallback(
+    (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      setError(false);
+      setSuccess(false);
+      if (!callback) return;
+      const formData = new FormData(e.currentTarget);
+      const fieldValues = Object.fromEntries(formData.entries());
+      const fields = Object.entries(fieldValues) as unknown as FieldsValues;
+      const fieldsIsValid = fields.every(
+        ([key, value]) => !fieldValidator[key](value)
+      );
 
-    if (fieldsIsValid) {
-      e.currentTarget.reset();
-      console.log(`submit : `, fieldValues);
-    }
-  }, []);
+      setWasSubmitted(true);
 
-  return { ref, wasSubmitted, handleSubmit };
+      if (fieldsIsValid) {
+        e.currentTarget.reset();
+        callback(fieldValues)
+          .then(() => setSuccess(true))
+          .catch(() => setError(true));
+      }
+    },
+    [callback]
+  );
+
+  return {
+    ref,
+    abled,
+    wasSubmitted,
+    success,
+    error,
+    handleSubmit,
+    handleOnValid,
+  };
 }
