@@ -29,6 +29,7 @@ const Button = styled.button`
   }
   &.button-Init {
     all: unset;
+    cursor: pointer;
   }
   &:disabled {
     cursor: not-allowed;

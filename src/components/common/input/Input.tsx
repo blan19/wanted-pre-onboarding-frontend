@@ -5,6 +5,7 @@ import * as Styled from "./Input.styled";
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   width?: CSSProperties["width"];
   className?: string;
+  variant?: "Init" | "Default";
 }
 
 const Input = (props: InputProps, ref: Ref<HTMLInputElement>) => {
@@ -13,6 +14,7 @@ const Input = (props: InputProps, ref: Ref<HTMLInputElement>) => {
     name,
     width = "100%",
     onInvalid,
+    variant = "Default",
     className = "input",
     ...rest
   } = props;
@@ -22,7 +24,7 @@ const Input = (props: InputProps, ref: Ref<HTMLInputElement>) => {
       ref={ref}
       name={name}
       type={type}
-      className={className}
+      className={`${className} input-${variant}`}
       onInvalid={onInvalid}
       style={{ width }}
       {...rest}

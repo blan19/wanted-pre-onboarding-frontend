@@ -45,10 +45,6 @@ const GlobalStyle = createGlobalStyle`
   a {
     all: unset;
   }
-
-  input {
-    all: unset;
-  }
 `;
 
 export default GlobalStyle;

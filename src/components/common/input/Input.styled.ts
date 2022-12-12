@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const Input = styled.input`
-  all: none;
+  all: unset;
   border: none;
   outline: none;
   -webkit-appearance: none;
@@ -15,6 +15,12 @@ const Input = styled.input`
   border: 1px solid #eaeaec;
   border-radius: 4px;
 
+  &.input-Init {
+    all: unset;
+    font-size: 14px;
+    line-height: 150%;
+    font-weight: 500;
+  }
   &:-webkit-autofill {
     -webkit-box-shadow: 0 0 0 1000px white inset;
     box-shadow: 0 0 0 1000px white inset;
