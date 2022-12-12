@@ -3,7 +3,7 @@ import fetcher from "./fetcher";
 import { getErrorMessage } from "../misc";
 import { resetToken, setToken } from "../token";
 
-interface FieldsValues {
+export interface FieldsValues {
   [key: string]: FormDataEntryValue;
 }
 
