@@ -1,1 +1,1 @@
-export { default as AuthSignUpForm } from "./AuthSignUpForm";
+export { default as AuthForm } from "./AuthForm";

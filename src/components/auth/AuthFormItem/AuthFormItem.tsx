@@ -1,4 +1,10 @@
-import React, { HTMLInputTypeAttribute, memo, useState } from "react";
+import React, {
+  HTMLInputTypeAttribute,
+  memo,
+  useEffect,
+  useState,
+} from "react";
+import { Fields } from "../../../hooks/useForm";
 import fieldValidator from "../../../utils/validator";
 import { Container, Input, Typography, Wrapper } from "../../common";
 
@@ -13,6 +19,7 @@ interface AuthFormItemProps {
   tooltip?: string;
   wasSubmitted?: boolean;
   pattern?: string;
+  handleOnValid: (name: Fields, valid: boolean) => void;
 }
 
 const AuthFormItem = memo(function AuthFormItem(props: AuthFormItemProps) {
@@ -25,11 +32,17 @@ const AuthFormItem = memo(function AuthFormItem(props: AuthFormItemProps) {
     tooltip,
     pattern,
     wasSubmitted,
+    handleOnValid,
   } = props;
   const [value, setValue] = useState("");
   const [touched, setTouched] = useState(false);
   const errorMessage = fieldValidator[htmlFor](value);
   const displayErrorMessage = (wasSubmitted || touched) && errorMessage;
+
+  useEffect(() => {
+    if (displayErrorMessage) handleOnValid(htmlFor, false);
+    else handleOnValid(htmlFor, true);
+  }, [displayErrorMessage, handleOnValid, htmlFor]);
   return (
     <Container display="flex" flexDirection="column" gap="6px">
       <Wrapper>
