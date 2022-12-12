@@ -1,23 +1,50 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { getTodos } from "../utils/api/todo";
+import { FieldsValues } from "../utils/api/auth";
+import * as todoService from "../utils/api/todo";
+
+interface TodoType {
+  id: number;
+  todo: string;
+  isCompleted: boolean;
+  userId: number;
+}
 
 interface TodoContextType {
-  todos: any;
-  createTodo: (todo: string, callback: VoidFunction) => void;
-  updateTodo: (todo: string, callback: VoidFunction) => void;
-  deleteTodo: (callback: VoidFunction) => void;
+  todos: TodoType[];
+  createTodo: (fieldsValue: FieldsValues) => Promise<void>;
+  updateTodo: (data: Omit<TodoType, "userId">) => void;
+  deleteTodo: (id: number) => void;
 }
 
 const TodoContext = createContext<TodoContextType>(null!);
 
 function TodoProvider({ children }: { children: React.ReactNode }) {
-  const [todos, setTodos] = useState<any>(null);
+  const [todos, setTodos] = useState<TodoType[]>([]);
 
-  const createTodo = (todo: string, callback: VoidFunction) => {};
+  const fetchTodo = async () => {
+    const todos = await getTodos();
+    setTodos(todos);
+  };
 
-  const updateTodo = (todo: string, callback: VoidFunction) => {};
+  const createTodo = async (fieldsValue: FieldsValues) => {
+    const todo = await todoService.createTodo(fieldsValue);
+    setTodos((prev) => prev.concat(todo));
+  };
 
-  const deleteTodo = (callback: VoidFunction) => {};
+  const updateTodo = (value: Omit<TodoType, "userId">) => {
+    todoService.updateTodo(value).then((update) => {
+      setTodos((prev) =>
+        prev.map((todo) => (todo.id === value.id ? update : todo))
+      );
+    });
+  };
+
+  const deleteTodo = (id: number) => {
+    todoService.deleteTodo(id).then(() => {
+      setTodos((prev) => prev.filter((todo) => todo.id !== id));
+    });
+  };
 
   const value = useMemo(
     () => ({ todos, createTodo, updateTodo, deleteTodo }),
@@ -25,12 +52,7 @@ function TodoProvider({ children }: { children: React.ReactNode }) {
   );
 
   useEffect(() => {
-    const fetchData = async () => {
-      const todos = await getTodos();
-      setTodos(todos);
-    };
-
-    void fetchData();
+    void fetchTodo();
   }, []);
 
   return <TodoContext.Provider value={value}>{children}</TodoContext.Provider>;
@@ -41,3 +63,4 @@ const useTodos = () => {
 };
 
 export { TodoContext, TodoProvider, useTodos };
+export type { TodoType };
