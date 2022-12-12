@@ -34,6 +34,11 @@ const fields: Fields[] = [
   },
 ];
 
+const initialState = {
+  email: false,
+  password: false,
+};
+
 const AuthForm = ({ type }: AuthFormProps) => {
   const title = type === "signIn" ? "로그인" : "회원가입";
   const callback = type === "signIn" ? signIn : signUp;
@@ -47,6 +52,7 @@ const AuthForm = ({ type }: AuthFormProps) => {
     handleSubmit,
     handleOnValid,
   } = useForm({
+    initialState,
     callback,
   });
   const navigate = useNavigate();

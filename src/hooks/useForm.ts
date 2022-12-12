@@ -1,22 +1,20 @@
 import { FormEvent, useCallback, useMemo, useRef, useState } from "react";
 import fieldValidator from "../utils/validator";
 
-const initialState = {
-  email: false,
-  password: false,
-};
-
 interface UseFormProps {
+  initialState: {
+    [key: string]: boolean;
+  };
   callback?: (fieldValue: {
     [key: string]: FormDataEntryValue;
   }) => Promise<any>;
 }
 
-export type Fields = "email" | "password";
+export type Fields = "email" | "password" | "todo";
 
 export type FieldsValues = [key: Fields, value: string][];
 
-export default function useForm({ callback }: UseFormProps) {
+export default function useForm({ initialState, callback }: UseFormProps) {
   const ref = useRef<HTMLFormElement>(null);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
@@ -28,12 +26,9 @@ export default function useForm({ callback }: UseFormProps) {
     [valid]
   );
 
-  const handleOnValid = useCallback(
-    (name: "email" | "password", valid: boolean) => {
-      setValid((prev) => ({ ...prev, [name]: valid }));
-    },
-    []
-  );
+  const handleOnValid = useCallback((name: string, valid: boolean) => {
+    setValid((prev) => ({ ...prev, [name]: valid }));
+  }, []);
 
   const handleSubmit = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
