@@ -25,10 +25,10 @@ const fieldValidator = {
   todo: (value: string | undefined) => {
     if (!value) return "필수로 입력해야합니다.";
 
-    const valueIsLongEnough = value.length >= 8;
+    const valueIsLongEnough = value.length >= 1;
 
     if (!valueIsLongEnough) {
-      return "8글자 이상이여야 합니다.";
+      return "1글자 이상이여야 합니다.";
     }
 
     return null;
