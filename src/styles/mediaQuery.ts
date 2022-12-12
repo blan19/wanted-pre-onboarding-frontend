@@ -7,7 +7,7 @@ type DeviceQuery = {
 const deviceQuery: DeviceQuery = {
   mobile: "(max-width: 703px)",
   tablet: "(min-width: 704px) and (max-width: 895px)",
-  desktop: "(min-width: 896px) and (max-width: 1919px)",
+  desktop: "(min-width: 896px)",
 };
 
 const applyMediaQuery = (...deviceList: Device[]) =>
