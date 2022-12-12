@@ -5,6 +5,7 @@ import SignIn from "./routes/auth/SignIn";
 import SignUp from "./routes/auth/SignUp";
 import Todo from "./routes/todo/Todo";
 import CreateTodo from "./routes/todo/CreateTodo";
+import { TodoProvider } from "./feature/TodoContext";
 
 const App = (
   <Route path="/">
@@ -13,7 +14,14 @@ const App = (
       <Route path="signin" element={<SignIn />} />
       <Route path="signup" element={<SignUp />} />
     </Route>
-    <Route path="todo" element={<Todo />}>
+    <Route
+      path="todo"
+      element={
+        <TodoProvider>
+          <Todo />
+        </TodoProvider>
+      }
+    >
       <Route path="create" element={<CreateTodo />} />
     </Route>
   </Route>

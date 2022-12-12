@@ -1,18 +1,16 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import { Container, Title } from "../../components/common";
-import { List } from "../../components/todos";
-import { TodoProvider } from "../../feature/TodoContext";
+import { TodoList, Toggle } from "../../components/todos";
 
 const Todo = () => {
   return (
-    <TodoProvider>
-      <Container>
-        <Title textAlign="center">투두 리스트</Title>
-        <Outlet />
-        <List />
-      </Container>
-    </TodoProvider>
+    <Container display="flex" flexDirection="column" padding="20px" gap="40px">
+      <Title textAlign="center">투두 리스트</Title>
+      <Toggle />
+      <Outlet />
+      <TodoList />
+    </Container>
   );
 };
 
