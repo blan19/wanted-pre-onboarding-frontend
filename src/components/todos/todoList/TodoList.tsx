@@ -94,18 +94,37 @@ const TodoListItem = memo(function TodoListItem({
   );
 });
 
+const NoTodoList = () => {
+  return (
+    <Container display="flex" justifyContent="center">
+      <Typography
+        as="h2"
+        fontSize="font-20"
+        fontWeight="bold"
+        color="greyScale-4"
+      >
+        투두리스트를 작성해보세요!
+      </Typography>
+    </Container>
+  );
+};
+
 const TodoList = () => {
   const { todos, updateTodo, deleteTodo } = useTodos();
   return (
     <Container display="flex" flexDirection="column" gap="12px">
-      {todos.map((todo) => (
-        <TodoListItem
-          key={todo.id}
-          updateTodo={updateTodo}
-          deleteTodo={deleteTodo}
-          {...todo}
-        />
-      ))}
+      {todos && todos.length ? (
+        todos.map((todo) => (
+          <TodoListItem
+            key={todo.id}
+            updateTodo={updateTodo}
+            deleteTodo={deleteTodo}
+            {...todo}
+          />
+        ))
+      ) : (
+        <NoTodoList />
+      )}
     </Container>
   );
 };
