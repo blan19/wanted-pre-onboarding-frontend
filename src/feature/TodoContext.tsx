@@ -29,7 +29,7 @@ function TodoProvider({ children }: { children: React.ReactNode }) {
 
   const createTodo = async (fieldsValue: FieldsValues) => {
     const todo = await todoService.createTodo(fieldsValue);
-    setTodos((prev) => prev.concat(todo));
+    setTodos((prev) => [...prev, todo]);
   };
 
   const updateTodo = (value: Omit<TodoType, "userId">) => {
