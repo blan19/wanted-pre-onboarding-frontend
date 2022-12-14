@@ -22,4 +22,12 @@ const Form = styled.form`
   `}
 `;
 
-export { Form };
+const wrapper = css`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+`;
+
+export { Form, wrapper };

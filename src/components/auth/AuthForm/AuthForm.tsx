@@ -3,10 +3,12 @@ import useForm from "../../../hooks/useForm";
 import useMedia from "../../../hooks/useMedia";
 import AuthFormItem from "../AuthFormItem";
 import useToast from "../../../hooks/useToast";
-import { Button } from "../../common";
+import { Button, Typography, Wrapper } from "../../common";
 import { Form } from "./AuthSignUpForm.styled";
 import { signIn, signUp } from "../../../utils/api/auth";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
+import * as style from "./AuthSignUpForm.styled";
 
 interface AuthFormProps {
   type: "signIn" | "signUp";
@@ -76,6 +78,28 @@ const AuthForm = ({ type }: AuthFormProps) => {
             {...field}
           />
         ))}
+        <Wrapper css={style.wrapper}>
+          <Typography
+            as="span"
+            color="greyScale-5"
+            fontSize="font-14"
+            fontWeight="thin"
+          >
+            {type === "signIn" ? "회원이 아니신가요?" : "이미 회원이신가요?"}
+          </Typography>
+          <Link to={type === "signIn" ? "/auth/signup" : "/auth/signin"}>
+            <Button variant="Init" width="content-fit">
+              <Typography
+                as="span"
+                fontSize="font-14"
+                fontWeight="bold"
+                color="greyScale-6"
+              >
+                {type === "signIn" ? "회원가입" : "로그인"}
+              </Typography>
+            </Button>
+          </Link>
+        </Wrapper>
         <Button type="submit" disabled={!abled}>
           {title}
         </Button>
