@@ -1,46 +1,45 @@
-# Getting Started with Create React App
+## Project Demo Link
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+[Demo](https://wanted-pre-onboarding-frontend-wheat.vercel.app)
 
-## Available Scripts
+## Project Start
 
-In the project directory, you can run:
+**install**
 
-### `npm start`
+```shell
+// npm
+npm install or i
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+// yarn
+yarn or yarn install
+```
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+**start**
 
-### `npm test`
+```shell
+npm start
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Project Structure
 
-### `npm run build`
+**로그인/회원가입**
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- 사용자 입력 값이 패턴과 다를시 에러 메세지를 보여준다.
+- 사용자의 입력 값이 올바르다면 버튼 활성화
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+<img src="https://user-images.githubusercontent.com/66871265/207888657-c1deb52e-9714-4f63-8eba-1c0bc895edb5.png">
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+<img src="https://user-images.githubusercontent.com/66871265/207888416-6d620190-d641-4563-b3b6-028a78e8384f.png">
 
-### `npm run eject`
+**투두리스트 리스트**
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- Nested Routing으로 작성 페이지와 리스트 페이지 분리
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+**투두리스트 작성**
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- Context Api를 사용하여 투두리스트 상태 관리
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+**투두리스트 수정/삭제**
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- input을 사용하여 수정모드가 아닐 경우 readOnly 처리
+- 수정모드라면 포커싱 이후 readOnly 해제
